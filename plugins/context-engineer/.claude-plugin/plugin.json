@@ -1,0 +1,8 @@
+{
+  "name": "context-engineer",
+  "description": "Write, audit, and optimize AI agent context files",
+  "author": {
+    "name": "Aleksei Sheifler",
+    "email": "aleksei.sheifler@gmail.com"
+  }
+}

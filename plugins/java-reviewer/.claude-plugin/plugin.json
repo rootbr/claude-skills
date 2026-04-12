@@ -1,0 +1,8 @@
+{
+  "name": "java-reviewer",
+  "description": "Deep Java code review with parallel specialist agents and verification",
+  "author": {
+    "name": "Aleksei Sheifler",
+    "email": "aleksei.sheifler@gmail.com"
+  }
+}

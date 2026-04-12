@@ -10,7 +10,7 @@ Multi-language web research with source verification and critical analysis. Clas
 
 Deep Java code review that spawns specialist reviewers in parallel (performance, concurrency, security, reliability, maintainability, project-specific), then verifies every finding through a dedicated verification agent. Produces two reports: a clean review with only confirmed findings and a rejection audit trail. Zero config required — works on any Java git repo.
 
-See [java-reviewer/README.md](skills/java-reviewer/README.md) for project integration and config options.
+See [java-reviewer/README.md](plugins/java-reviewer/skills/java-reviewer/README.md) for project integration and config options.
 
 ### `/context-engineer`
 
