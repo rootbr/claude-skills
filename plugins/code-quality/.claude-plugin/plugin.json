@@ -1,0 +1,11 @@
+{
+  "name": "code-quality",
+  "description": "Deep Java code review with parallel specialist agents and proactive code cleanup",
+  "author": {
+    "name": "Aleksei Sheifler",
+    "email": "aleksei.sheifler@gmail.com"
+  },
+  "repository": "https://github.com/rootbr/claude-skills",
+  "license": "Apache-2.0",
+  "keywords": ["java", "code-review", "clean-code", "refactoring"]
+}

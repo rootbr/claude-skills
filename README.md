@@ -8,14 +8,21 @@ Every rule, checklist item, and review criterion traces to one of:
 - **Technical standards** — RFCs, official specifications, language/framework documentation
 - **Human-tested** — double-checked and reviewed by a human before commit
 
-## Skills
+## Plugins
+
+### Сode-quality
+
+| Skill | Description |
+|--|--|
+| `/java-reviewer` | Deep Java code review with parallel specialist agents and verification. [Details](plugins/code-quality/skills/java-reviewer/README.md) |
+| `/clean-code` | Improve code readability and maintainability |
+
+### Research
 
 | Skill | Description |
 |--|--|
 | `/research` | Web research with source verification and critical analysis |
-| `/java-reviewer` | Deep Java code review with parallel specialist agents and verification. [Details](plugins/java-reviewer/skills/java-reviewer/README.md) |
 | `/context-engineer` | Audit and optimize any AI agent context: CLAUDE.md, SKILL.md, prompts, instructions. Adapt project docs for AI consumption |
-| `/clean-code` | Improve code readability and maintainability |
 
 ## Installation
 
@@ -25,10 +32,11 @@ Add the marketplace:
 /plugin marketplace add rootbr/claude-skills
 ```
 
-Install skills:
+Install plugins:
 
 ```
-/plugin install <skill-name>@rootbr/claude-skills
+/plugin install code-quality@claude-skills
+/plugin install research@claude-skills
 ```
 
 ## License
