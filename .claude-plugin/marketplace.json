@@ -1,0 +1,33 @@
+{
+  "name": "claude-skills",
+  "owner": {
+    "name": "Aleksei Sheifler",
+    "email": "aleksei.sheifler@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "research",
+      "description": "Multi-language web research with source verification and critical analysis",
+      "version": "1.0.0",
+      "source": "./skills/research"
+    },
+    {
+      "name": "java-reviewer",
+      "description": "Deep Java code review with parallel specialist agents and verification",
+      "version": "1.0.0",
+      "source": "./skills/java-reviewer"
+    },
+    {
+      "name": "context-engineer",
+      "description": "Write, audit, and optimize AI agent context files",
+      "version": "1.0.0",
+      "source": "./skills/context-engineer"
+    },
+    {
+      "name": "clean-code",
+      "description": "Proactive code cleanup and refactoring",
+      "version": "1.0.0",
+      "source": "./skills/clean-code"
+    }
+  ]
+}
