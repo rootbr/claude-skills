@@ -1,5 +1,5 @@
 ---
-name: clean-code
+name: cleaning-code
 description: "Cleans up recently modified code: simplify, reduce nesting, remove redundancy, enforce project style. Use this skill proactively whenever you write, refactor, or modify code — not just when the user explicitly asks. Trigger on: any code change during a feature implementation, bug fix, or refactoring session; phrases like 'clean this up', 'simplify', 'refactor'. The goal is to leave every piece of code you touch cleaner than you found it."
 ---
 

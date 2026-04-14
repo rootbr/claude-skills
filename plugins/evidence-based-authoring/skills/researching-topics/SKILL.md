@@ -1,5 +1,5 @@
 ---
-name: research
+name: researching-topics
 description: "Research any topic using web search with source verification and critical analysis. Use this skill whenever the user asks to: search, look up, find, research, investigate, compare, recommend, review; asks \"what's the best...\", \"how does X work\", \"is X worth it\"; or needs current real-world information, product reviews, scientific data, practical local knowledge, or expert opinions — even for seemingly simple questions where up-to-date or experience-based info matters."
 ---
 

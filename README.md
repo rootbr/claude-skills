@@ -10,19 +10,20 @@ Every rule, checklist item, and review criterion traces to one of:
 
 ## Plugins
 
-### Сode-quality
+### code-quality
 
 | Skill | Description |
 |--|--|
-| `/java-reviewer` | Deep Java code review with parallel specialist agents and verification. [Details](plugins/code-quality/skills/java-reviewer/README.md) |
-| `/clean-code` | Improve code readability and maintainability |
+| `/reviewing-java` | Deep Java code review with parallel specialist agents and verification. [Details](plugins/code-quality/skills/reviewing-java/README.md) |
+| `/cleaning-code` | Improve code readability and maintainability |
+| `/committing-changes` | Review changes and create atomic commits following Conventional Commits |
 
-### Research
+### evidence-based-authoring
 
 | Skill | Description |
 |--|--|
-| `/research` | Web research with source verification and critical analysis |
-| `/context-engineer` | Audit and optimize any AI agent context: CLAUDE.md, SKILL.md, prompts, instructions. Adapt project docs for AI consumption |
+| `/researching-topics` | Web research with source verification and critical analysis |
+| `/auditing-ai-context` | Audit and optimize any AI agent context: CLAUDE.md, SKILL.md, prompts, instructions. Adapt project docs for AI consumption |
 
 ## Installation
 
@@ -36,7 +37,7 @@ Install plugins:
 
 ```
 /plugin install code-quality@claude-skills
-/plugin install research@claude-skills
+/plugin install evidence-based-authoring@claude-skills
 ```
 
 ## License

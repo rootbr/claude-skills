@@ -8,14 +8,14 @@
     {
       "name": "code-quality",
       "description": "Deep Java code review with parallel specialist agents and proactive code cleanup",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "source": "./plugins/code-quality"
     },
     {
-      "name": "research",
-      "description": "Web research with source verification and AI context engineering",
-      "version": "2.0.0",
-      "source": "./plugins/research"
+      "name": "evidence-based-authoring",
+      "description": "Evidence-based authoring: web research with source verification and AI context files grounded in traceable sources",
+      "version": "3.0.0",
+      "source": "./plugins/evidence-based-authoring"
     }
   ]
 }

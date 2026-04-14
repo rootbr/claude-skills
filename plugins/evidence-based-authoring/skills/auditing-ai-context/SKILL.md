@@ -1,5 +1,5 @@
 ---
-name: context-engineer
+name: auditing-ai-context
 description: Write, audit, and optimize AI agent context files, skills, and instructions. Use this skill whenever the user creates, edits, or reviews CLAUDE.md, SKILL.md, agent definitions, or any file containing AI agent instructions; writes or optimizes system prompts, agent personas, or LLM instructions; discusses context engineering, prompt optimization, or multi-agent architecture; needs to describe complex or unclear code logic in context files rather than in the code itself; or edits .md files in .claude/, .cursor/, or similar AI config directories. Also activate when editing any .md file that may contain instructions for an AI agent rather than human documentation — even without explicit mention of 'context engineering'.
 ---
 

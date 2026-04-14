@@ -1,4 +1,4 @@
-# java-reviewer
+# reviewing-java
 
 Deep Java code review skill for Claude Code. Runs specialist reviewers in parallel against a git diff, verifies every finding, and produces two reports — a clean review and a rejection audit trail.
 
@@ -22,7 +22,7 @@ Reviewers are selected dynamically based on diff content — not all run every t
 
 ```
 cd <your-java-repo>
-/java-reviewer
+/reviewing-java
 ```
 
 Works out of the box if your repo is a git working tree with Java sources and a standard base branch (`main`, `master`, or `develop`).
@@ -42,7 +42,7 @@ For deeper reviews, add a config file to your repo:
 ```
 <your-repo>/
 └── .claude/
-    └── java-reviewer/
+    └── reviewing-java/
         └── config.md
 ```
 

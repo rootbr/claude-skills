@@ -21,4 +21,4 @@ No traceable source → do not add.
 
 ## Quality Gate
 
-MUST run `/context-engineer` on every SKILL.md or agent prompt change before committing.
+MUST run `/auditing-ai-context` on every SKILL.md or agent prompt change before committing.

@@ -1,5 +1,6 @@
 ---
-description: Review changes and create atomic commits following Conventional Commits
+name: committing-changes
+description: Review changes and create atomic commits following Conventional Commits. Use when the user asks to commit, wants help writing commit messages, or has staged/modified changes ready to land.
 ---
 
 # Commit Changes

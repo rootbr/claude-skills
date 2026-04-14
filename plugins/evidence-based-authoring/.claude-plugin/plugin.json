@@ -1,6 +1,6 @@
 {
-  "name": "research",
-  "description": "Web research with source verification and AI context engineering",
+  "name": "evidence-based-authoring",
+  "description": "Evidence-based authoring: web research with source verification and AI context files grounded in traceable sources",
   "author": {
     "name": "Aleksei Sheifler",
     "email": "aleksei.sheifler@gmail.com"

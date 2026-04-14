@@ -1,5 +1,5 @@
 ---
-name: java-reviewer
+name: reviewing-java
 description: Java code review — branches, PRs, diffs. Trigger on "review this branch", "find bugs", "what's wrong with this PR", "audit changes", "check diff", "review these Java changes", or any request to review Java code against project invariants. Spawns parallel reviewers with a verification pass. Any Java git repo, zero config required.
 ---
 
@@ -12,7 +12,7 @@ The workflow has six phases — Scope, Context, Agent Selection, Execute, Verify
 The most important thing to get right: **maximize real findings, minimize false positives**. One false positive erodes trust in the entire review. Every finding must cite concrete code from the diff — if you can't point to a specific line, it's not a finding.
 
 ```
-java-reviewer/
+reviewing-java/
 ├── SKILL.md
 └── agents/
     ├── performance-reviewer/{prompt.md, references/checklist.md}
@@ -54,7 +54,7 @@ If the user gave a path filter, append it: `git diff $diff_ref -- '*.java' $path
 
 ### Load project config
 
-Check for `.claude/java-reviewer/config.md` in the repo root. If it exists, parse the YAML frontmatter and keep the markdown body as `project_context`. All frontmatter keys are optional — each is documented in the phase where it's used. No config or malformed config is fine; everything works without it.
+Check for `.claude/reviewing-java/config.md` in the repo root. If it exists, parse the YAML frontmatter and keep the markdown body as `project_context`. All frontmatter keys are optional — each is documented in the phase where it's used. No config or malformed config is fine; everything works without it.
 
 ### Validate
 
@@ -96,7 +96,7 @@ Try these sources in order, use the first that gives you something:
 
 If none of those work, ask: "What's the purpose of this change? One paragraph is enough."
 
-The `project_context` is the markdown body from `config.md` you loaded earlier. Pass it to every reviewer — see `.claude/java-reviewer/config.md` in the repo root.
+The `project_context` is the markdown body from `config.md` you loaded earlier. Pass it to every reviewer — see `.claude/reviewing-java/config.md` in the repo root.
 
 If the config has a `documentation` key (directory path), read the docs there before launching reviewers — they give reviewers architectural context that the diff alone doesn't show.
 
@@ -151,7 +151,7 @@ Wait for confirmation. The user might add or remove passes.
 
 ### Build the prompts
 
-Each reviewer gets the same structure: tell it to read its `agents/<name>/prompt.md` from the java-reviewer skill directory and follow the instructions there (paths like `references/checklist.md` are relative to the prompt file). Pass these inputs:
+Each reviewer gets the same structure: tell it to read its `agents/<name>/prompt.md` from the reviewing-java skill directory and follow the instructions there (paths like `references/checklist.md` are relative to the prompt file). Pass these inputs:
 
 - `diff_ref` — the resolved ref range
 - `path_filter` — subtree filter or empty
