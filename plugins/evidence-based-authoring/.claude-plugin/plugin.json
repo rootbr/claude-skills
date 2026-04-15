@@ -5,7 +5,7 @@
     "name": "Aleksei Sheifler",
     "email": "aleksei.sheifler@gmail.com"
   },
-  "repository": "https://github.com/rootbr/claude-skills",
+  "repository": "https://github.com/rootbr/rooted",
   "license": "Apache-2.0",
   "keywords": ["research", "web-search", "context-engineering", "ai-context"]
 }

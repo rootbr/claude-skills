@@ -1,5 +1,5 @@
 {
-  "name": "claude-skills",
+  "name": "rooted",
   "owner": {
     "name": "Aleksei Sheifler",
     "email": "aleksei.sheifler@gmail.com"
@@ -8,13 +8,13 @@
     {
       "name": "code-quality",
       "description": "Deep Java code review with parallel specialist agents and proactive code cleanup",
-      "version": "3.0.0",
+      "version": "4.0.0",
       "source": "./plugins/code-quality"
     },
     {
       "name": "evidence-based-authoring",
       "description": "Evidence-based authoring: web research with source verification and AI context files grounded in traceable sources",
-      "version": "3.0.0",
+      "version": "4.0.0",
       "source": "./plugins/evidence-based-authoring"
     }
   ]

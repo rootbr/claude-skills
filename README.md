@@ -1,6 +1,10 @@
-# Claude Skills — evidence-backed AI agent skills
+# Rooted — Claude Code plugins rooted in evidence
 
-## How this differs from other skill marketplaces
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/rootbr/rooted?style=social)](https://github.com/rootbr/rooted/stargazers)
+[![Rules cited from](https://img.shields.io/badge/rules%20cited%20from-13%20papers%20%C2%B7%202%20RFCs-success)](#references)
+
+Every rule in this marketplace traces to a peer-reviewed paper or an RFC — never to "ask the model to write a skill." [Research shows](https://arxiv.org/abs/2602.11988) LLM-generated context files *decrease* agent task success and raise inference cost by ~20%. Rooted structurally refuses them.
 
 - **Evidence-based, not LLM-generated.** Every rule traces to a peer-reviewed paper, RFC/spec, or a hands-on test — not to "ask the model to write a skill."
 - **Lean context over static dumps.** For example, instead of an `/init`-style project-structure blob in `CLAUDE.md` (shown to *decrease* agent success and raise cost by ~20% [[11]](#references)), orientation happens on demand via [`overview.sh`](overview.sh) with an explicit stop-instruction. The agent doesn't preemptively slurp the whole tree into context, so it doesn't fill its working memory with project content it doesn't need and later lose focus on the actual task.
@@ -35,15 +39,19 @@ Every rule, checklist item, and review criterion traces to one of:
 Add the marketplace:
 
 ```
-/plugin marketplace add rootbr/claude-skills
+/plugin marketplace add rootbr/rooted
 ```
 
 Install plugins:
 
 ```
-/plugin install code-quality@claude-skills
-/plugin install evidence-based-authoring@claude-skills
+/plugin install code-quality@rooted
+/plugin install evidence-based-authoring@rooted
 ```
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md). Every new rule must cite a source — an arXiv ID, an RFC number, or a linked hands-on test. PRs without citations are rejected by design, not by oversight.
 
 ## References
 

@@ -1,6 +1,6 @@
-# Claude Skills
+# Rooted
 
-Claude Code plugin marketplace.
+Claude Code plugin marketplace — rooted in evidence.
 
 ## Orientation
 
