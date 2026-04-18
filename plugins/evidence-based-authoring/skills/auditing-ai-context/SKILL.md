@@ -25,6 +25,8 @@ Write **what to achieve**, not step-by-step procedures for every scenario. Imper
 
 Mixed approach (usually best): declare goal and constraints, provide imperative steps only for critical path.
 
+Phased procedures: each phase opens with a one-line goal, body is terse imperatives. Hoist rationale to the goal line — SHOULD NOT scatter "because…" / "this is what makes…" mid-procedure.
+
 ### Right Altitude
 
 | Level | Problem | Example |
@@ -193,6 +195,7 @@ bad:  user = userRepo.findByEmail(email)                 look up user by email
 | "Don't do X" lists | Reframe as what to do instead |
 | Static project inventories | Replace with discovery command (`./overview.sh`, `grep ...`). Auto-allow in `.claude/settings.json` |
 | Descriptive rules ("X is derived from Y") | Reframe as actions ("Before adding X — verify Y") or pointers ("See X: `command`") |
+| Inline justifications mid-procedure ("because…", "this makes…") | Hoist to phase goal line or cut; keep body terse imperatives |
 | File only grows, never pruned | When the file outgrows its budget — time to review. |
 | Only build/run/arch rules | Add security, performance, and error-handling constraints |
 | Over-pruned to bare minimum | Before deleting a rule, check: is it essential? Is it covered in another file? If unsure, keep it and test. |
