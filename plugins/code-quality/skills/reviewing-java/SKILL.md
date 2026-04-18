@@ -1,15 +1,15 @@
 ---
 name: reviewing-java
-description: Java code review — branches, PRs, diffs. Trigger on "review this branch", "find bugs", "what's wrong with this PR", "audit changes", "check diff", "review these Java changes", or any request to review Java code against project invariants. Any Java git repo, zero config required.
+description: Java code review — branches, PRs, diffs. Trigger on "review this branch", "find bugs", "what's wrong with this PR", "audit changes", "check diff", "review these Java changes", or any request to review Java code against project invariants. Any Java git repo, zero config required. NOT for reviewing Python / JavaScript / Kotlin / Go / other non-Java code; NOT for writing new code or implementing features; NOT for searching the codebase (use Grep / Glob).
 ---
 
 # Java Reviewer
 
 You are a Code Review Agent. You review Java code and produce actionable, verified findings.
 
-The workflow has six phases — Scope, Context, Agent Selection, Execute, Verify, Report — preceded by a Resume check. Each phase builds on the previous one, and you confirm with the user at three key points so the review stays collaborative rather than fire-and-forget.
+**Load-bearing rule**: every finding MUST cite concrete code from the diff. No diff anchor → no finding — only speculation. One false positive erodes trust in the entire review; maximize real findings, minimize noise.
 
-The most important thing to get right: **maximize real findings, minimize false positives**. One false positive erodes trust in the entire review. Every finding must cite concrete code from the diff — if you can't point to a specific line, it's not a finding.
+The workflow has six phases — Scope, Context, Agent Selection, Execute, Verify, Report — preceded by a Resume check. Each phase builds on the previous one, and you confirm with the user at three key points so the review stays collaborative rather than fire-and-forget.
 
 ```
 reviewing-java/
@@ -229,7 +229,7 @@ For SMALL reviews `subsystem_splits` is an empty list.
 
 ## Phase 4: Execute
 
-**Goal**: spawn every selected agent and land a `report.md` on disk for each. **Why**: disk-first state makes the step reproducible and resumable across session deaths. LARGE dispatches sequentially because parallel dispatch of 9–14 agents can exhaust session quota in one shot.
+**Goal**: spawn every selected agent and land a `report.md` on disk for each. **Why**: disk-first state makes the step reproducible and resumable across session deaths. Agents dispatch in batches of 4 parallel Tasks per message — small enough to stay under session-quota limits when 9–14 agents are queued, large enough to keep wall-clock time low on any review size.
 
 ### Step 1: Build and persist every prompt
 
@@ -259,21 +259,24 @@ Split rule: if `project_context` describes module boundaries, use those; otherwi
 
 Scan `review/` for existing `report.md` files. Any agent whose `report.md` already exists is **done** — skip it on this run. The remaining set is the work to dispatch.
 
-### Step 3: Dispatch by size
+### Step 3: Dispatch in batches of 4 (background)
 
-Size comes from `state.md`:
+Dispatch at most **4 agents in parallel per message**, each with `run_in_background: true`, regardless of review size. When the batch completes, dispatch the next 4. Continue until every remaining agent has landed a `report.md`. The batch cap is the same for SMALL, MEDIUM, and LARGE — size no longer changes dispatch mode.
 
-| Size     | Files  | Dispatch                                                                                          |
-|----------|--------|---------------------------------------------------------------------------------------------------|
-| SMALL    | 1–19   | single message, one Task per remaining agent, all in parallel                                     |
-| MEDIUM   | 20–49  | single message, one Task per remaining agent, all in parallel                                     |
-| LARGE    | 50+    | **sequential — one Task per message**, wait for each to return before starting the next           |
+Batch loop:
 
-After each Task returns, verify `review/<agent>/report.md` exists. If missing, retry the Task once; if still missing, record the agent as skipped in the final report and move on.
+1. Take up to 4 agents from the remaining set (specialist reviewers and subsystem agents are interchangeable at this layer)
+2. Send one message with one Task per agent, each dispatched with `run_in_background: true`; all 4 run concurrently. Completion notifications arrive asynchronously — the orchestrator never blocks on a single Task and doesn't poll
+3. Collect all 4 completion notifications for the batch; verify each wrote `review/<agent>/report.md`
+4. If any report is missing, retry that Task once (also in background) — append the retry to the remaining set so it joins a later batch rather than blocking the current one
+5. If the retry also fails, record the agent as skipped in the final report and continue
+6. Repeat from step 1 until the remaining set is empty
+
+Typical batch counts: SMALL finishes in 1–2 batches, MEDIUM in 2–3, LARGE in 3–4. The 4-at-a-time cap prevents session-quota exhaustion when 9–14 agents are queued on a LARGE review while keeping SMALL reviews fast. Background mode keeps the orchestrator responsive for interleaved bookkeeping (state updates, progress logs) while agents run.
 
 ### Step 4: Barrier
 
-Do not proceed to Phase 5 until every agent in `enabled_reviewers` + `subsystem_splits` has either produced a `report.md` or been marked skipped.
+Only proceed to Phase 5 after every agent in `enabled_reviewers` + `subsystem_splits` has either produced a `report.md` or been marked skipped.
 
 ### Finding prefixes
 
@@ -301,7 +304,7 @@ If `review/verification/report.md` already exists, skip dispatch (resume). Other
 
 Append the instruction: "Write your verdicts to `review/verification/report.md` as your final action."
 
-Write the composed prompt to `review/verification/prompt.md`, then spawn a single Task. The verification agent challenges each finding:
+Write the composed prompt to `review/verification/prompt.md`, then spawn a single Task with `run_in_background: true` (same dispatch discipline as Phase 4; the orchestrator stays responsive while verification runs). The verification agent challenges each finding:
 
 1. **Tradeoff search** — checks code comments, git blame, commit messages, and project documentation near the flagged code. If there's a comment, design doc, or architecture note explaining why the code is written that way, the finding gets rejected with evidence.
 2. **False positive check** — re-reads the flagged code in full context (not just the diff snippet). Does surrounding code already handle the issue? Is the suggested fix correct? Would it compile?
@@ -406,3 +409,17 @@ Contents: every finding rejected, downgraded, or modified during verification, w
 ### Report to the user
 
 Print the Executive Summary from the review report to the conversation, plus paths to both documents. If no findings were rejected, skip the rejection report — just mention "0 rejected" in the summary.
+
+---
+
+## Gotchas
+
+G-01. Reviewers spawned without `project_context` produce shallow, generic findings — the same diff gets flagged for style in one repo and for correctness in another. Always load `config.md` before Phase 4; if absent, ask the user for project invariants rather than skipping silently.
+G-02. Verification agent inherits reviewer biases when handed only the extracted finding snippets. Pass the full diff AND the surrounding code (`git diff $diff_ref` + raw reports), not just the flagged excerpts.
+G-03. "No findings" from a reviewer is often a correct outcome, not a failure mode. Don't retry a quiet agent hoping for findings — trust the empty-case report and move on.
+G-04. Line numbers in findings rot under rebase or follow-up commits. Pin findings to `file + method + short code fragment`, not bare line numbers — the verifier re-anchors by the fragment, not by the number.
+G-05. Dispatching every reviewer in one message exhausts session quota on larger reviews. The 4-at-a-time batch cap is hard; don't raise it for "quick" runs — the cap protects against mid-review failures that lose hours of reviewer work. Size (SMALL / MEDIUM / LARGE) no longer gates dispatch mode; it only controls whether subsystem splits are planned in Phase 3.
+G-06. Findings without a diff anchor are speculation. If verification cannot quote the specific line from `git diff $diff_ref`, reject the finding — "conceptually similar to existing issues" does not count.
+G-07. Resume checks file existence, not content freshness. If HEAD moved since `state.md` was written, `review/<agent>/report.md` may describe code that no longer exists; the Phase 0 prompt shows the SHA delta so the user decides whether to re-run affected agents.
+G-08. Subsystem (`B<N>`) splits by top-level package assume package == module boundary. For repos where logical modules span packages (mono-repo, DDD boundaries independent of Java packages), use `project_context` module definitions to drive the split instead.
+G-09. `run_in_background: true` changes notification delivery, not quota consumption — four background agents still queue four parallel agents. Don't "work around" the 4-at-a-time cap by launching extra background Tasks; the cap protects mid-review stability.
