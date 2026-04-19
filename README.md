@@ -34,6 +34,7 @@ Research → explore → write. Three skills covering the full preparation pipel
 | Skill | Description |
 |--|--|
 | `/reviewing-java` | Deep Java code review with parallel specialist agents and verification. [Details](plugins/code-quality/skills/reviewing-java/README.md) |
+| `/architecting-code` | Structural and boundary-level design: dependency direction, layering, component cohesion/coupling, plugin architecture, use-case isolation |
 | `/cleaning-code` | Improve code readability and maintainability |
 | `/committing-changes` | Review changes and create atomic commits following Conventional Commits |
 
