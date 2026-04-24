@@ -30,6 +30,13 @@ No repetition across sub-techniques.
 
 Requires `WebSearch`; `WebFetch` also useful for named-page retrieval.
 
+## Search constraints (mandatory)
+
+FAILURE TO FOLLOW THESE WILL CAUSE AGENT FREEZE:
+
+**WebSearch iteration limit**: Maximum 3 WebSearch calls per sub-section (Experts, Books, Conferences, Papers, Communities). If 3 calls don't yield 2 verified sources, proceed with what you have and mark the gap.
+
+
 ## Method
 
 Follow the triangulation discipline in [../../references/source-triangulation.md](../../references/source-triangulation.md). **Every named source MUST be verified by at least one independent search result** before writing.
@@ -90,3 +97,7 @@ G-03. For humanities / craft topics without formal BOKs, substitute retrieval ch
 G-04. Recent-paper retrieval can false-negative within 90 days of publication. If the topic is actively moving, add a final entry like `[Experts] Field is actively moving as of {YYYY-MM}; re-run this agent in 90 days to catch newer open problems` as its own question.
 
 G-05. Completion marker rules — see [../../references/checkpointing-protocol.md](../../references/checkpointing-protocol.md).
+
+G-06. **SEARCH FREEZE PREVENTION**: If you find yourself repeating the same search with minor variations, or if the same 3-5 URLs keep appearing across searches, abort the search cycle and write `[WebSearch] Exhausted all productive search vectors — gaps noted`. This is not failure; it is productive termination of unproductive search.
+
+G-07. If a named expert has no verifiable connection to the topic, **do not retry with more searches**. Mark the gap and move to another expert. Repeated failure on a single named source means the source is not relevant — replace it.
