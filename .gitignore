@@ -11,3 +11,8 @@ Thumbs.db
 
 # Temporary files
 tmp/
+
+# Local-only Claude Code config (per-repo skills, hooks, worktrees)
+.claude/skills/
+.claude/hooks/
+.claude/worktrees/
